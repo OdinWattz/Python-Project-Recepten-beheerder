@@ -1,0 +1,20 @@
+Gedaan! 1. Recept Toevoegen: Voeg een nieuw recept toe, inclusief ingrediënten, kookinstructies, en tijdsduur.
+
+2. Recept Zoeken: Zoek recepten op naam, ingrediënt, of categorie (bijvoorbeeld ontbijt, lunch, diner).
+Deel ervan gedaan, zoeken op naam werkt. Nu nog op ingrediënt en dan nog categorieën toevoegen.
+Oke Gedaan!
+
+Gedaan! 3. Recepten Lijst: Toon een overzicht van alle beschikbare recepten.
+
+4. Recepten Beheren: Pas bestaande recepten aan of verwijder ze.
+Verwijderen werkt, wil nog toevoegen dat ik alles in 1x kan Verwijderen
+Oke Gedaan!
+
+5. Ingrediëntenlijst: Maak automatisch een boodschappenlijstje gebaseerd op de ingrediënten van meerdere geselecteerde recepten.
+
+Gedaan! 6. Opslag en Laden: Sla recepten op in een bestand (bijvoorbeeld JSON) en laad ze opnieuw in bij het starten van het programma.
+
+Als ik nog tijd over heb kan ik dit toevoegen:
+1. Favorieten: Voeg een functie toe om favoriete recepten te markeren.
+2. Tijdfilter: Zoek naar recepten op basis van bereidingstijd.
+Gedaan! 3. Categorieën: Voeg categorieën toe zoals vegetarisch, veganistisch, enz.

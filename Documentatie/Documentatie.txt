@@ -1,0 +1,15 @@
+Hoofdfuncties van het project:
+Recept Toevoegen: Voeg een nieuw recept toe, inclusief ingrediënten, kookinstructies, en tijdsduur.
+Recept Zoeken: Zoek recepten op naam, ingrediënt, of categorie (bijvoorbeeld ontbijt, lunch, diner).
+Recepten Lijst: Toon een overzicht van alle beschikbare recepten.
+Recepten Beheren: Pas bestaande recepten aan of verwijder ze.
+Ingrediëntenlijst: Maak automatisch een boodschappenlijstje gebaseerd op de ingrediënten van meerdere geselecteerde recepten.
+Opslag en Laden: Sla recepten op in een bestand (bijvoorbeeld JSON) en laad ze opnieuw in bij het starten van het programma.
+
+
+Mogelijke uitbreidingen:
+
+Favorieten: Voeg een functie toe om favoriete recepten te markeren.
+Tijdfilter: Zoek naar recepten op basis van bereidingstijd.
+Categorieën: Voeg categorieën toe zoals vegetarisch, veganistisch, enz.
+Dit project biedt de mogelijkheid om te oefenen met bestandsbeheer, datastructuren, en zoekalgoritmen.
