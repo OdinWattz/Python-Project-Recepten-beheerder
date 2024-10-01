@@ -13,6 +13,18 @@ def sla_recepten_op(recepten):
     with open("recepten.json", "w") as f:
         json.dump(recepten, f, indent=4)
 
+# Laad de favoriete recepten
+def laad_favoriete_recepten():
+    if os.path.exists("favoriete_recepten.json"):
+        with open("favoriete_recepten.json", "r") as f:
+            return json.load(f)
+    return []
+
+# Sla de favoriete recepten op in een JSON-bestand
+def sla_favoriete_recepten_op(favoriete_recepten):
+    with open("favoriete_recepten.json", "w") as f:
+        json.dump(favoriete_recepten, f, indent=4)
+
 # Voeg een nieuw recept toe
 def voeg_recept_toe(recepten):
     naam = input("Voer de naam van het recept in: ")
@@ -31,7 +43,7 @@ def voeg_recept_toe(recepten):
     sla_recepten_op(recepten)
     print(f"Recept '{naam}' toegevoegd!")
 
-
+# Verwijder een recept
 def verwijder_recept(recepten):
     toon_recepten(recepten)
     keuze = input("Voer het nummer van het recept dat je wilt verwijderen: ")
@@ -44,13 +56,12 @@ def verwijder_recept(recepten):
     else:
         print("Ongeldige invoer. Probeer opnieuw.") 
 
-
 # Toon alle opgeslagen recepten
 def toon_recepten(recepten):
     if recepten:
         print("\nBeschikbare recepten:")
         for i, recept in enumerate(recepten, start=1):
-            categorie = recept.get('categorie', 'Geen categorie opgegeven')  # Standaardwaarde als categorie ontbreekt
+            categorie = recept.get('categorie', 'Geen categorie opgegeven')
             print(f"{i}. {recept['naam']} (Categorie: {categorie})")
 
         keuze = input("Voer het nummer van het recept in voor meer informatie: ")
@@ -64,19 +75,16 @@ def toon_recepten(recepten):
     else:
         print("\nGeen recepten gevonden.")
 
-
+# Toon de details van een recept
 def toon_recept_details(recept):
     print("\nRecept details:")
     print(f"Naam: {recept['naam']}")
-
     print("Ingrediënten:")
     for ingredient in recept['ingrediënten']:
         print(f"- {ingredient}")
-    
     print(f"Instructies: {recept['instructies']}")
 
-
-# Zoek een recept op basis van een zoekterm
+# Zoek een recept op basis van naam, categorie of ingrediënt
 def zoek_recept(recepten):
     if recepten:
         print("\nAlle recepten:")
@@ -112,40 +120,37 @@ def zoek_recept(recepten):
         
         if keuze.isdigit() and 1 <= int(keuze) <= len(gevonden_recepten):
             geselecteerd_recept = gevonden_recepten[int(keuze) - 1]
-            toon_recept_details(geselecteerd_recept)  # Toon details van het geselecteerde recept
+            toon_recept_details(geselecteerd_recept)
         elif keuze == "0":
-            return  # Terug naar het menu
+            return
         else:
             print("Geen geldige keuze. Terug naar het menu.")
     else:
         print(f"Geen recepten gevonden met '{zoekterm}'.")
 
-
+# Voeg categorieën toe aan bestaande recepten
 def voeg_categorie_toe_aan_bestaan(recepten):
     for recept in recepten:
         if 'categorie' not in recept:
-            recept['categorie'] = 'Geen categorie opgegeven'  # Of een andere standaardcategorie
-
-    sla_recepten_op(recepten)  # Sla de bijgewerkte recepten op
+            recept['categorie'] = 'Geen categorie opgegeven'
+    sla_recepten_op(recepten)
     print("Categorieën toegevoegd aan bestaande recepten.")
 
+# Wijzig een bestaand recept
 def wijzig_recept(recepten):
     if not recepten:
         print("Geen recepten beschikbaar om te wijzigen.")
         return
 
-    # Toon een lijst met recepten en hun details
     print("\nBeschikbare recepten om te wijzigen:")
     for i, recept in enumerate(recepten, start=1):
         print(f"{i}. {recept['naam']} - Categorie: {recept.get('categorie', 'Geen categorie')}")
         print(f"   Ingrediënten: {', '.join(recept['ingrediënten'])}")
         print(f"   Instructies: {recept['instructies'][:50]}...")  # Laat de eerste 50 tekens van de instructies zien
-        print(f"   Categorie: {recept.get('categorie', 'Geen categorie')}")
-        print("")  # Lege regel
+        print(f"   Categorie: {recept.get('categorie', 'Geen categorie')}\n")
 
     keuze = input("Voer de naam van het recept in dat je wilt wijzigen: ")
 
-    # Zoek het recept op basis van de ingevoerde naam
     recept = next((r for r in recepten if r['naam'].lower() == keuze.lower()), None)
 
     if recept:
@@ -174,7 +179,7 @@ def wijzig_recept(recepten):
             elif keuze_wijzig == "3":
                 nieuwe_instructies = input(f"Voer nieuwe kookinstructies in ({recept['instructies']}): ")
                 recept['instructies'] = nieuwe_instructies if nieuwe_instructies else recept['instructies']
-                print(f"Instructies gewijzigd.")
+                print("Instructies gewijzigd.")
 
             elif keuze_wijzig == "4":
                 nieuwe_categorie = input(f"Voer een nieuwe categorie in ({recept.get('categorie', 'Geen categorie')}): ")
@@ -191,6 +196,7 @@ def wijzig_recept(recepten):
     else:
         print("Geen recept gevonden met die naam. Probeer opnieuw.")
 
+# Verwijder alle recepten
 def verwijder_alle_recepten(recepten):
     bevestiging = input("Weet je zeker dat je alle recepten wilt verwijderen? (ja/nee) ")
     if bevestiging == "ja":
@@ -198,11 +204,10 @@ def verwijder_alle_recepten(recepten):
         sla_recepten_op(recepten)
         print("Alle recepten zijn verwijderd.")
     else:
-        print("De recepten zijn niet verwijderd.")
+        print("Verwijdering geannuleerd.")
 
-favoriete_recepten = []
-
-def markeer_als_favoriet(recepten):
+# Markeer een recept als favoriet
+def markeer_als_favoriet(recepten, favoriete_recepten):
     print("\nBeschikbare recepten om te markeren:")
     for i, recept in enumerate(recepten, start=1):
         print(f"{i}. {recept['naam']} - Categorie: {recept.get('categorie', 'Geen categorie')}")
@@ -216,20 +221,22 @@ def markeer_als_favoriet(recepten):
         if recept not in favoriete_recepten:
             # Voeg toe aan favorieten
             favoriete_recepten.append(recept)
+            sla_favoriete_recepten_op(favoriete_recepten)  # Sla de favorieten op
             print(f"Recept '{recept['naam']}' is toegevoegd aan je favorieten!")
         else:
             # Vraag of het verwijderd moet worden
             keuze = input(f"'{recept['naam']}' staat al in je favorieten. Wil je het verwijderen? (ja/nee): ").lower()
             if keuze == "ja":
                 favoriete_recepten.remove(recept)
+                sla_favoriete_recepten_op(favoriete_recepten)  # Sla de favorieten op
                 print(f"Recept '{recept['naam']}' is verwijderd uit je favorieten.")
             else:
                 print(f"'{recept['naam']}' blijft in je favorieten.")
     else:
         print(f"Recept met naam '{recept_naam}' niet gevonden.")
 
-
-def toon_favoriete_recepten():
+# Toon de favoriete recepten
+def toon_favoriete_recepten(favoriete_recepten):
     if favoriete_recepten:
         print("\nFavoriete recepten:")
         for recept in favoriete_recepten:
@@ -255,7 +262,8 @@ def toon_menu():
 # Start het programma
 def start_programma():
     recepten = laad_recepten()
-    voeg_categorie_toe_aan_bestaan(recepten)  # Voeg categorieën toe
+    favoriete_recepten = laad_favoriete_recepten()  # Laad favoriete recepten
+    voeg_categorie_toe_aan_bestaan(recepten)  # Voeg categorieën toe aan bestaande recepten
 
     while True:
         keuze = toon_menu()
@@ -270,9 +278,9 @@ def start_programma():
         elif keuze == "5":
             wijzig_recept(recepten)
         elif keuze == "6":
-            markeer_als_favoriet(recepten)
+            markeer_als_favoriet(recepten, favoriete_recepten)
         elif keuze == "7":
-            toon_favoriete_recepten()
+            toon_favoriete_recepten(favoriete_recepten)
         elif keuze == "8":
             verwijder_alle_recepten(recepten)
         elif keuze == "9":
@@ -280,8 +288,6 @@ def start_programma():
             break
         else:
             print("Ongeldige keuze. Probeer opnieuw.")
-
-
 
 # Start het programma
 if __name__ == "__main__":
