@@ -12,6 +12,7 @@ Verwijderen werkt, wil nog toevoegen dat ik alles in 1x kan Verwijderen
 Gedaan!
 
 5. Ingrediëntenlijst: Maak automatisch een boodschappenlijstje gebaseerd op de ingrediënten van meerdere geselecteerde recepten.
+Gedaan!
 
 6. Opslag en Laden: Sla recepten op in een bestand (bijvoorbeeld JSON) en laad ze opnieuw in bij het starten van het programma.
 Gedaan!

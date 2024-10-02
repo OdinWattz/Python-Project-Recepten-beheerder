@@ -1,5 +1,6 @@
 import json
 import os
+import csv
 
 # Laad bestaande recepten als het bestand bestaat
 def laad_recepten():
@@ -359,6 +360,40 @@ def toon_recept_details(recept):
     print(f"Categorie: {recept.get('categorie', 'Geen categorie opgegeven')}")
 
 
+# Voeg ingrediënten toe aan een boodschappenlijst
+def voeg_ingredienten_aan_boodschappenlijst(recepten):
+    boodschappenlijst = []
+
+    print("\nBeschikbare recepten:")
+    for i, recept in enumerate(recepten, start=1):
+        print(f"{i}. {recept['naam']} - Ingrediënten: {', '.join(recept['ingrediënten'])}")
+
+    keuze = input("Voer het nummer van het recept in om ingrediënten toe te voegen aan je boodschappenlijst: ")
+
+    if keuze.isdigit() and 1 <= int(keuze) <= len(recepten):
+        gekozen_recept = recepten[int(keuze) - 1]
+        boodschappenlijst.extend(gekozen_recept['ingrediënten'])
+        print(f"Ingrediënten van '{gekozen_recept['naam']}' toegevoegd aan de boodschappenlijst.")
+    else:
+        print("Ongeldige invoer.")
+
+    # Toon de huidige boodschappenlijst
+    print("\nBoodschappenlijst:")
+    for ingredient in boodschappenlijst:
+        print(f"- {ingredient}")
+
+    return boodschappenlijst
+
+# Exporteer de boodschappenlijst naar een CSV-bestand
+def exporteer_boodschappenlijst_naar_csv(boodschappenlijst, bestandsnaam="boodschappenlijst.csv"):
+    with open(bestandsnaam, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Ingrediënten"])  # Koptekst
+        for item in boodschappenlijst:
+            writer.writerow([item])
+
+    print(f"Boodschappenlijst succesvol geëxporteerd naar {bestandsnaam}.")
+
 # Hoofdmenu
 def toon_menu():
     print("\nMaak een keuze:")
@@ -370,7 +405,8 @@ def toon_menu():
     print("6. Markeer Favoriet")
     print("7. Toon Favorieten")
     print("8. Verwijder alle recepten")
-    print("9. Stoppen")
+    print("9. Exporteer boodschappenlijst naar CSV")
+    print("10. Stoppen")
     keuze = input("> ")
     return keuze
 
@@ -399,6 +435,9 @@ def start_programma():
         elif keuze == "8":
             verwijder_alle_recepten(recepten)
         elif keuze == "9":
+            boodschappenlijst = voeg_ingredienten_aan_boodschappenlijst(recepten)
+            exporteer_boodschappenlijst_naar_csv(boodschappenlijst)
+        elif keuze == "10":
             print("Programma gestopt.")
             break
         else:
