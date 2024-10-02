@@ -1,34 +1,61 @@
 [
     {
-        "naam": "Crispy Chicken Burger",
+        "naam": "Crispy kip burger",
         "ingredi\u00ebnten": [
-            "Kip 230gr",
-            "125ML Karnemelk",
-            "1/4tsp zout",
-            "250ML Vegetable Oil",
-            "2 Hamburger Buns",
-            "Halve tomaat",
-            "62,5ML Rice vinegar",
-            "1tsp Zuiker",
+            "500gr boneless chicken breasts",
+            "250ml Karnemelk",
             "1/2 tsp Zout",
-            "62,5ML Mayonaise",
-            "1tsp BBQ Kruiden",
-            "125gr Bloem",
-            "1/2 tsp baking powder",
-            "1/2 tsp Paprikapoeder",
-            "1/2 tsp onion powder",
-            "1/2 tsp garlic powder",
-            "15ML Karnemelk"
+            "500ml vegetable oil",
+            "4 Hamburger buns",
+            "1 Tomaat",
+            "125ml rice vinegar",
+            "2 tsp Zuiker",
+            "1 tsp Zout",
+            "125ml Mayonaise",
+            "2 tsp BBQ Kruiden",
+            "250gr Bloem",
+            "1 tsp Baking Powder",
+            "1 tsp Paprika Kruiden",
+            "1 tsp onion powder",
+            "1 tsp Garlic Powder",
+            "30ml Karnemelk"
         ],
-        "instructies": "Verander ik later wel",
+        "instructies": [
+            "Sla de kip plat totdat deze \u00bd\" (1 cm) dik is",
+            "Snijd de kipfilets in de breedte doormidden",
+            "Meng de karnemlek en zout in een grote kom en voeg de kip toe",
+            "Marineer gedurende 1 uur of een hele nacht",
+            "Voor de saus: Meng de mayonaise en kruiden en zet in de koelkast tot gebruik",
+            "Meng de ingredi\u00ebnten voor de paneerlaag in een middelgrote kom",
+            "waarbij je de karnemlek als laatste toevoegt",
+            "Werk met \u00e9\u00e9n stuk kip tegelijk: Haal de gemarineerde kip door het bloemmengsel en druk goed aan zodat er een dikke korst onstaat.",
+            "Verhit de olie in de ge\u00ebmailleerde gietijzeren koekenpan op middelhoog vuur tot de olie een temperatuur van 180\u00b0C (350\u00b0F) bereikt (Frituurpan kan ook).",
+            "Gebruik een ovenwant en een tang om de kip voorzichtig in de hete olie te leggen.",
+            "Bak met deksel op de pan gedurende 5 minuten.",
+            "Verwijder het deksel. Draai elk stuk kip voorzichtig om. Bak onafgedekt verder gedurende 5\u20136 minuten",
+            "Of totdat de kip knapperig en goudbruin is en een temperatuur van 74\u00b0C (165\u00b0F) heeft bereikt.",
+            "Haal de kip uit de olie en leg op een rooster om licht af te koelen.",
+            "Om de broodjes samen te stellen.",
+            "Besmeer beide helften van de broodjes met de saus.",
+            "Voeg een paar tomaten toe en leg de kip erbovenop."
+        ],
         "categorie": "Avondeten"
     },
     {
-        "naam": "Beef",
+        "naam": "Kip Tandorie",
         "ingredi\u00ebnten": [
-            "Meat"
+            "500gr Kipfilet",
+            "Kip kruiden",
+            "Verschillende Soorten Groente",
+            "Rijst"
         ],
-        "instructies": "Bake",
-        "categorie": "Vlees"
+        "instructies": [
+            "Snijd de kip in blokjes",
+            "Snijd de groenten in stukken",
+            "Meng de kip en de kruiden in een bak en laat minimaal 1 uur staan",
+            "Bak in de pan",
+            "Kook de rijst"
+        ],
+        "categorie": "Avondeten"
     }
 ]

@@ -28,8 +28,25 @@ def sla_favoriete_recepten_op(favoriete_recepten):
 # Voeg een nieuw recept toe
 def voeg_recept_toe(recepten):
     naam = input("Voer de naam van het recept in: ")
-    ingrediënten = input("Voer de ingrediënten in (gescheiden door komma's): ").split(", ")
-    instructies = input("Voer de kookinstructies in: ")
+    
+    # Ingrediënten per stap invoeren
+    print("Voer de ingrediënten stap voor stap in. Typ 'stop' om te stoppen.")
+    ingrediënten = []
+    while True:
+        ingredient = input(f"Ingrediënt {len(ingrediënten) + 1}: ")
+        if ingredient.lower() == "stop":
+            break
+        ingrediënten.append(ingredient)
+    
+    # Instructies per stap invoeren
+    print("Voer de kookinstructies stap voor stap in. Typ 'stop' om te stoppen.")
+    instructies = []
+    while True:
+        stap = input(f"Stap {len(instructies) + 1}: ")
+        if stap.lower() == "stop":
+            break
+        instructies.append(stap)
+    
     categorie = input("Voer de categorie van het recept in: ")
 
     nieuw_recept = {
@@ -43,9 +60,27 @@ def voeg_recept_toe(recepten):
     sla_recepten_op(recepten)
     print(f"Recept '{naam}' toegevoegd!")
 
+
 # Verwijder een recept
 def verwijder_recept(recepten):
-    toon_recepten(recepten)
+    if not recepten:
+        print("Geen recepten beschikbaar om te verwijderen.")
+        return
+
+    print("\nBeschikbare recepten om te verwijderen:")
+    for i, recept in enumerate(recepten, start=1):
+        print(f"{i}. {recept['naam']} - Categorie: {recept.get('categorie', 'Geen categorie')}")
+        print(f"   Ingrediënten: {', '.join(recept['ingrediënten'])}")
+        
+        print("   Instructies:")
+        # Toon de eerste paar stappen van de instructies
+        for j, stap in enumerate(recept['instructies'][:3], start=1):
+            print(f"   Stap {j}: {stap}")
+        if len(recept['instructies']) > 3:
+            print("   ...")  # Laat zien dat er nog meer stappen zijn
+
+        print(f"   Categorie: {recept.get('categorie', 'Geen categorie')}\n")
+    
     keuze = input("Voer het nummer van het recept dat je wilt verwijderen: ")
 
     if keuze.isdigit() and 1 <= int(keuze) <= len(recepten):
@@ -54,7 +89,8 @@ def verwijder_recept(recepten):
         sla_recepten_op(recepten)
         print(f"Recept '{verwijderd_recept['naam']}' is verwijderd!")
     else:
-        print("Ongeldige invoer. Probeer opnieuw.") 
+        print("Ongeldige invoer. Probeer opnieuw.")
+
 
 # Toon alle opgeslagen recepten
 def toon_recepten(recepten):
@@ -79,10 +115,20 @@ def toon_recepten(recepten):
 def toon_recept_details(recept):
     print("\nRecept details:")
     print(f"Naam: {recept['naam']}")
+    
+    # Ingrediënten per regel tonen
     print("Ingrediënten:")
-    for ingredient in recept['ingrediënten']:
-        print(f"- {ingredient}")
-    print(f"Instructies: {recept['instructies']}")
+    for i, ingredient in enumerate(recept['ingrediënten'], start=1):
+        print(f"Ingrediënt {i}: {ingredient}")
+    print("")
+    
+    # Instructies per stap tonen
+    print("Instructies:")
+    for i, stap in enumerate(recept['instructies'], start=1):
+        print(f"Stap {i}: {stap}")
+    print("")
+
+    print(f"Categorie: {recept.get('categorie', 'Geen categorie opgegeven')}")
 
 # Zoek een recept op basis van naam, categorie of ingrediënt
 def zoek_recept(recepten):
@@ -145,8 +191,17 @@ def wijzig_recept(recepten):
     print("\nBeschikbare recepten om te wijzigen:")
     for i, recept in enumerate(recepten, start=1):
         print(f"{i}. {recept['naam']} - Categorie: {recept.get('categorie', 'Geen categorie')}")
-        print(f"   Ingrediënten: {', '.join(recept['ingrediënten'])}")
-        print(f"   Instructies: {recept['instructies'][:50]}...")  # Laat de eerste 50 tekens van de instructies zien
+        
+        # Ingrediënten per regel laten zien
+        print("   Ingrediënten:")
+        for j, ingredient in enumerate(recept['ingrediënten'], start=1):
+            print(f"   Ingrediënt {j}: {ingredient}")
+        
+        # Instructies per regel laten zien
+        print("   Instructies:")
+        for j, stap in enumerate(recept['instructies'], start=1):
+            print(f"   Stap {j}: {stap}")
+        
         print(f"   Categorie: {recept.get('categorie', 'Geen categorie')}\n")
 
     keuze = input("Voer de naam van het recept in dat je wilt wijzigen: ")
@@ -171,15 +226,38 @@ def wijzig_recept(recepten):
                 print(f"Naam gewijzigd naar '{recept['naam']}'.")
 
             elif keuze_wijzig == "2":
-                nieuwe_ingrediënten = input(f"Voer nieuwe ingrediënten in ({', '.join(recept['ingrediënten'])}): ")
+                print("\nHuidige ingrediënten in stappen:")
+                for j, ingredient in enumerate(recept['ingrediënten'], start=1):
+                    print(f"Ingrediënt {j}: {ingredient}")
+                
+                print("Voer nieuwe ingrediënten in, één per regel. Typ 'stop' om te stoppen.")
+                nieuwe_ingrediënten = []
+                while True:
+                    nieuwe_ingredient = input(f"Ingrediënt {len(nieuwe_ingrediënten) + 1}: ")
+                    if nieuwe_ingredient.lower() == "stop":
+                        break
+                    nieuwe_ingrediënten.append(nieuwe_ingredient)
+
                 if nieuwe_ingrediënten:
-                    recept['ingrediënten'] = nieuwe_ingrediënten.split(", ")
-                print(f"Ingrediënten gewijzigd naar {', '.join(recept['ingrediënten'])}.")
+                    recept['ingrediënten'] = nieuwe_ingrediënten
+                print(f"Ingrediënten gewijzigd naar: {', '.join(recept['ingrediënten'])}.")
 
             elif keuze_wijzig == "3":
-                nieuwe_instructies = input(f"Voer nieuwe kookinstructies in ({recept['instructies']}): ")
-                recept['instructies'] = nieuwe_instructies if nieuwe_instructies else recept['instructies']
-                print("Instructies gewijzigd.")
+                print("\nHuidige instructies in stappen:")
+                for j, stap in enumerate(recept['instructies'], start=1):
+                    print(f"Stap {j}: {stap}")
+
+                print("Voer nieuwe kookinstructies in, één per regel. Typ 'stop' om te stoppen.")
+                nieuwe_instructies = []
+                while True:
+                    nieuwe_stap = input(f"Stap {len(nieuwe_instructies) + 1}: ")
+                    if nieuwe_stap.lower() == "stop":
+                        break
+                    nieuwe_instructies.append(nieuwe_stap)
+
+                if nieuwe_instructies:
+                    recept['instructies'] = nieuwe_instructies
+                print("Instructies gewijzigd in stappen.")
 
             elif keuze_wijzig == "4":
                 nieuwe_categorie = input(f"Voer een nieuwe categorie in ({recept.get('categorie', 'Geen categorie')}): ")
@@ -196,6 +274,8 @@ def wijzig_recept(recepten):
     else:
         print("Geen recept gevonden met die naam. Probeer opnieuw.")
 
+
+
 # Verwijder alle recepten
 def verwijder_alle_recepten(recepten):
     bevestiging = input("Weet je zeker dat je alle recepten wilt verwijderen? (ja/nee) ")
@@ -206,9 +286,9 @@ def verwijder_alle_recepten(recepten):
     else:
         print("Verwijdering geannuleerd.")
 
-# Markeer een recept als favoriet
+# Markeer een recept als favoriet of verwijder een favoriet
 def markeer_als_favoriet(recepten, favoriete_recepten):
-    print("\nBeschikbare recepten om te markeren:")
+    print("\nBeschikbare recepten om te markeren of te verwijderen:")
     for i, recept in enumerate(recepten, start=1):
         print(f"{i}. {recept['naam']} - Categorie: {recept.get('categorie', 'Geen categorie')}")
 
@@ -235,14 +315,49 @@ def markeer_als_favoriet(recepten, favoriete_recepten):
     else:
         print(f"Recept met naam '{recept_naam}' niet gevonden.")
 
-# Toon de favoriete recepten
+# Toon de favoriete recepten en bekijk details of verwijder een favoriet
 def toon_favoriete_recepten(favoriete_recepten):
     if favoriete_recepten:
         print("\nFavoriete recepten:")
-        for recept in favoriete_recepten:
-            print(f" - {recept['naam']}")
+        for i, recept in enumerate(favoriete_recepten, start=1):
+            print(f"{i}. {recept['naam']}")
+
+        keuze = input("Voer het nummer van een favoriet recept in voor meer details of om te verwijderen ('q' om terug te gaan): ")
+
+        if keuze.isdigit() and 1 <= int(keuze) <= len(favoriete_recepten):
+            geselecteerd_recept = favoriete_recepten[int(keuze) - 1]
+            print(f"\nGeselecteerd favoriet: {geselecteerd_recept['naam']}")
+            
+            # Toon de details van het recept
+            toon_recept_details(geselecteerd_recept)
+
+            # Vraag of je het recept wilt verwijderen uit favorieten
+            verwijder_keuze = input("Wil je dit recept uit je favorieten verwijderen? (ja/nee): ").lower()
+            if verwijder_keuze == 'ja':
+                favoriete_recepten.remove(geselecteerd_recept)
+                sla_favoriete_recepten_op(favoriete_recepten)  # Sla de favorieten op
+                print(f"Recept '{geselecteerd_recept['naam']}' is verwijderd uit je favorieten.")
+            else:
+                print(f"'{geselecteerd_recept['naam']}' blijft in je favorieten.")
+        elif keuze.lower() == 'q':
+            return
+        else:
+            print("Ongeldige invoer. Probeer opnieuw.")
     else:
         print("\nJe hebt nog geen favoriete recepten.")
+
+# Functie om receptdetails te tonen
+def toon_recept_details(recept):
+    print("\nRecept details:")
+    print(f"Naam: {recept['naam']}")
+    print("Ingrediënten:")
+    for ingredient in recept['ingrediënten']:
+        print(f"- {ingredient}")
+    print("Instructies:")
+    for i, stap in enumerate(recept['instructies'], start=1):
+        print(f"Stap {i}: {stap}")
+    print(f"Categorie: {recept.get('categorie', 'Geen categorie opgegeven')}")
+
 
 # Hoofdmenu
 def toon_menu():
