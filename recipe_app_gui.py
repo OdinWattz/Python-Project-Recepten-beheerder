@@ -286,7 +286,13 @@ class RecipeManagerApp:
 
         if keuze and 1 <= keuze <= len(self.recepten):
             verwijderde_recept = self.recepten.pop(keuze - 1)
+
+            # Verwijder het recept ook uit de favoriete recepten als het erin zit
+            if verwijderde_recept in self.favoriete_recepten:
+                self.favoriete_recepten.remove(verwijderde_recept)
+
             sla_recepten_op(self.recepten)
+            sla_favoriete_recepten_op(self.favoriete_recepten)  # Veronderstelt dat je een functie hebt om favoriete recepten op te slaan
             messagebox.showinfo("Succes", f"Recept '{verwijderde_recept['naam']}' verwijderd!")
 
     def voeg_ingredienten_aan_boodschappenlijst(self):
@@ -334,7 +340,9 @@ class RecipeManagerApp:
     def verwijder_alle_recepten(self):
         if messagebox.askyesno("Bevestiging", "Weet je zeker dat je alle recepten wilt verwijderen?"):
             self.recepten.clear()
+            self.favoriete_recepten.clear()  # Zorg ervoor dat ook de favoriete recepten worden verwijderd
             sla_recepten_op(self.recepten)
+            sla_favoriete_recepten_op(self.favoriete_recepten)  # Veronderstelt dat je een functie hebt om favoriete recepten op te slaan
             messagebox.showinfo("Succes", "Alle recepten zijn verwijderd.")
 
     def toon_copyright_info(self):
