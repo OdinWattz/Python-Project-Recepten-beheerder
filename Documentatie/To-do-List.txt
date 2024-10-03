@@ -33,3 +33,11 @@ Stap 1: Snijd de kip
 Stap 2: Bak de kip
 
 En dan ook de ingrediënten op die manier.
+
+Ik heb nu een werkende GUI. 
+Ik mis alleen nog wel dat ik alles in 1x kan verwijderen
+Ik kan recepten nog niet wijzigen
+Ik moet nog aanpassen dat ik kan zoeken op Categorie, ingrediënt, Bereidingswijze, bereidingstijd en naam
+Ik moet nog aanpassen dat ik ook bereidingstijd kan toevoegen
+Bij markeer als favoriet een korte samenvatting krijg van alle recepten en dan puur de naam en categorie van het recept
+Dat ik mijn favoriete recepten ook kan bekijken in plaats van alleen kan zien welke ik heb als favoriet

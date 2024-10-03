@@ -39,7 +39,8 @@
             "Besmeer beide helften van de broodjes met de saus.",
             "Voeg een paar tomaten toe en leg de kip erbovenop."
         ],
-        "categorie": "Avondeten"
+        "categorie": "Avondeten",
+        "bereidingstijd": "120 Minuten"
     },
     {
         "naam": "Kip Tandorie",
@@ -56,6 +57,23 @@
             "Bak in de pan",
             "Kook de rijst"
         ],
-        "categorie": "Avondeten"
+        "categorie": "Avondeten",
+        "bereidingstijd": "Niet beschikbaar"
+    },
+    {
+        "naam": "Kip",
+        "ingredi\u00ebnten": [
+            "300gr Kip",
+            "200gr groente",
+            "rijst"
+        ],
+        "instructies": [
+            "Snijd de kip in blokjes",
+            "snijd de groente in blokjes",
+            "Bak de kip en groente samen in de pan",
+            "Kook de rijst"
+        ],
+        "categorie": "Avondeten",
+        "bereidingstijd": "30 Minuten"
     }
 ]
