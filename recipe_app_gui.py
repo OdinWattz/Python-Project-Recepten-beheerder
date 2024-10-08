@@ -178,7 +178,6 @@ class RecipeManagerApp:
             )
             messagebox.showinfo("Recept Details", details)
 
-
     def zoek_recept(self):
         zoekterm = simpledialog.askstring("Zoek Recept", "Voer een zoekterm in (naam, categorie, ingrediënt, bereidingstijd):")
     
@@ -301,7 +300,7 @@ class RecipeManagerApp:
             return
 
         # Toon de lijst met recepten
-        recepten_info = "\n".join([f"{i+1}. {recept['naam']} - Ingrediënten: {', '.join(recept['ingrediënten'])}" for i, recept in enumerate(self.recepten)])
+        recepten_info = "\n".join([f"{i+1}. {recept['naam']}" for i, recept in enumerate(self.recepten)])
     
         # Vraag de gebruiker om meerdere recepten te selecteren (invoer in de vorm van 1,2,3)
         keuzes = simpledialog.askstring("Voeg Ingrediënten Toe aan Boodschappenlijst", 
