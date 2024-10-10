@@ -116,7 +116,6 @@ class RecipeManagerApp:
         self.boodschappenlijst = []
 
 
-
     def voeg_recept_toe(self):
         naam = simpledialog.askstring("Voeg Recept Toe", "Voer de naam van het recept in:")
         if naam:
@@ -211,25 +210,90 @@ class RecipeManagerApp:
         recept = next((r for r in self.recepten if r['naam'].lower() == naam.lower()), None)
 
         if recept:
-            nieuwe_naam = simpledialog.askstring("Wijzig Naam", f"Huidige naam: {recept['naam']}\nVoer een nieuwe naam in (of laat leeg om niet te wijzigen):") or recept['naam']
-            nieuwe_ingredienten = self.vraag_ingredienten() or recept['ingrediënten']
-            nieuwe_instructies = self.vraag_instructies() or recept['instructies']
-            nieuwe_categorie = simpledialog.askstring("Wijzig Categorie", f"Huidige categorie: {recept['categorie']}\nVoer een nieuwe categorie in (of laat leeg om niet te wijzigen):") or recept['categorie']
+            while True:
+                keuze = simpledialog.askstring(
+                    "Wijzig Recept",
+                    "Wat wil je wijzigen?\n1. Naam\n2. Ingrediënten\n3. Instructies\n4. Categorie\n5. Bereidingstijd\n6. Stoppen"
+                )
 
-            # Wijzig of voeg bereidingstijd toe
-            nieuwe_bereidingstijd = simpledialog.askstring(
-                "Wijzig Bereidingstijd",
-                f"Huidige bereidingstijd: {recept.get('bereidingstijd', 'Niet ingesteld')}\nVoer een nieuwe bereidingstijd in (of laat leeg om niet te wijzigen):"
-            ) or recept.get('bereidingstijd', '')
+                if keuze == '1':
+                    nieuwe_naam = simpledialog.askstring("Wijzig Naam", f"Huidige naam: {recept['naam']}\nVoer een nieuwe naam in:") or recept['naam']
+                    recept['naam'] = nieuwe_naam
 
-            # Update het recept
-            recept.update({
-                "naam": nieuwe_naam,
-                "ingrediënten": nieuwe_ingredienten,
-                "instructies": nieuwe_instructies,
-                "categorie": nieuwe_categorie,
-                "bereidingstijd": nieuwe_bereidingstijd
-            })
+                elif keuze == '2':
+                    while True:
+                        ingredient_keuze = simpledialog.askstring(
+                            "Wijzig Ingrediënten",
+                            "Wat wil je doen?\n1. Ingrediënt toevoegen\n2. Ingrediënt wijzigen\n3. Ingrediënt verwijderen\n4. Stoppen"
+                        )
+
+                        if ingredient_keuze == '1':
+                            nieuw_ingredient = simpledialog.askstring("Nieuw Ingrediënt", "Voer een nieuw ingrediënt in:")
+                            if nieuw_ingredient:
+                                recept['ingrediënten'].append(nieuw_ingredient)
+
+                        elif ingredient_keuze == '2':
+                            ingredienten_info = "\n".join([f"{i+1}. {ing}" for i, ing in enumerate(recept['ingrediënten'])])
+                            index = simpledialog.askinteger("Wijzig Ingrediënt", f"Ingrediënten:\n{ingredienten_info}\nKies een nummer om te wijzigen:")
+                            if index and 1 <= index <= len(recept['ingrediënten']):
+                                nieuw_ingredient = simpledialog.askstring("Wijzig Ingrediënt", f"Huidig ingrediënt: {recept['ingrediënten'][index-1]}\nVoer een nieuw ingrediënt in:")
+                                if nieuw_ingredient:
+                                    recept['ingrediënten'][index-1] = nieuw_ingredient
+
+                        elif ingredient_keuze == '3':
+                            ingredienten_info = "\n".join([f"{i+1}. {ing}" for i, ing in enumerate(recept['ingrediënten'])])
+                            index = simpledialog.askinteger("Verwijder Ingrediënt", f"Ingrediënten:\n{ingredienten_info}\nKies een nummer om te verwijderen:")
+                            if index and 1 <= index <= len(recept['ingrediënten']):
+                                del recept['ingrediënten'][index-1]
+
+                        elif ingredient_keuze == '4':
+                            break
+
+                elif keuze == '3':
+                    while True:
+                        instructie_keuze = simpledialog.askstring(
+                            "Wijzig Instructies",
+                            "Wat wil je doen?\n1. Instructie toevoegen\n2. Instructie wijzigen\n3. Instructie verwijderen\n4. Stoppen"
+                        )
+
+                        if instructie_keuze == '1':
+                            nieuwe_instructie = simpledialog.askstring("Nieuwe Instructie", "Voer een nieuwe instructie in:")
+                            if nieuwe_instructie:
+                                recept['instructies'].append(nieuwe_instructie)
+
+                        elif instructie_keuze == '2':
+                            instructies_info = "\n".join([f"{i+1}. {stap}" for i, stap in enumerate(recept['instructies'])])
+                            index = simpledialog.askinteger("Wijzig Instructie", f"Instructies:\n{instructies_info}\nKies een nummer om te wijzigen:")
+                            if index and 1 <= index <= len(recept['instructies']):
+                                nieuwe_instructie = simpledialog.askstring("Wijzig Instructie", f"Huidige instructie: {recept['instructies'][index-1]}\nVoer een nieuwe instructie in:")
+                                if nieuwe_instructie:
+                                    recept['instructies'][index-1] = nieuwe_instructie
+
+                        elif instructie_keuze == '3':
+                            instructies_info = "\n".join([f"{i+1}. {stap}" for i, stap in enumerate(recept['instructies'])])
+                            index = simpledialog.askinteger("Verwijder Instructie", f"Instructies:\n{instructies_info}\nKies een nummer om te verwijderen:")
+                            if index and 1 <= index <= len(recept['instructies']):
+                                del recept['instructies'][index-1]
+
+                        elif instructie_keuze == '4':
+                            break
+
+                elif keuze == '4':
+                    nieuwe_categorie = simpledialog.askstring("Wijzig Categorie", f"Huidige categorie: {recept['categorie']}\nVoer een nieuwe categorie in:") or recept['categorie']
+                    recept['categorie'] = nieuwe_categorie
+
+                elif keuze == '5':
+                    nieuwe_bereidingstijd = simpledialog.askstring(
+                        "Wijzig Bereidingstijd",
+                        f"Huidige bereidingstijd: {recept.get('bereidingstijd', 'Niet ingesteld')}\nVoer een nieuwe bereidingstijd in:"
+                    ) or recept.get('bereidingstijd', '')
+                    recept['bereidingstijd'] = nieuwe_bereidingstijd
+
+                elif keuze == '6':
+                    break
+
+                else:
+                    messagebox.showwarning("Ongeldige Keuze", "Maak een geldige keuze.")
 
             # Sla het recept op
             sla_recepten_op(self.recepten)
